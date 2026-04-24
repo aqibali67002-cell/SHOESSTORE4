@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+</head>
+<body>
+
+<h1>Admin Panel</h1>
+
+<input id="name" placeholder="Product Name">
+<input id="price" placeholder="Price">
+<input id="image" placeholder="Image URL">
+<input id="desc" placeholder="Description">
+<button onclick="addProduct()">Add Product</button>
+
+<div id="products"></div>
+
+<script>
+async function addProduct() {
+  const name = document.getElementById('name').value;
+  const price = document.getElementById('price').value;
+  const image = document.getElementById('image').value;
+  const description = document.getElementById('desc').value;
+
+  await fetch('/add-product', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, price, image, description })
+  });
+
+  loadProducts();
+}
+
+async function loadProducts() {
+  const res = await fetch('/products');
+  const data = await res.json();
+
+  document.getElementById('products').innerHTML = data.map(p => `
+    <div>
+      <img src="${p.image}" width="100">
+      <h3>${p.name}</h3>
+      <p>${p.price} PKR</p>
+      <button onclick="deleteProduct('${p._id}')">Delete</button>
+    </div>
+  `).join('');
+}
+
+async function deleteProduct(id) {
+  await fetch('/delete/' + id, { method: 'DELETE' });
+  loadProducts();
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>

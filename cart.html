@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart</title>
+</head>
+<body>
+
+<h1>Your Cart</h1>
+
+<div id="cart"></div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+document.getElementById('cart').innerHTML = cart.map(p => `
+  <div>
+    <h3>${p.name}</h3>
+    <p>${p.price} PKR</p>
+  </div>
+`).join('');
+</script>
+
+</body>
+</html>
