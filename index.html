@@ -2,25 +2,48 @@
 <html>
 <head>
   <title>Shoes Store</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial; }
+    .product { border:1px solid #ccc; padding:10px; margin:10px; display:inline-block; }
+    img { width:150px; }
+    .admin { display:none; }
+  </style>
 </head>
+
 <body>
 
-<header>
-  <h1>Shoes Store</h1>
-  <a href="cart.html">🛒 Cart</a>
-</header>
+<h1>Shoes Store</h1>
 
-<section class="form">
-  <input id="name" placeholder="Product Name">
-  <input id="price" placeholder="Price">
-  <input id="image" placeholder="Image URL">
-  <input id="desc" placeholder="Description">
-  <button onclick="addProduct()">Add Product</button>
-</section>
+<!-- Products -->
+<div id="products"></div>
 
-<section id="products" class="grid"></section>
+<script>
+let products = [
+  {name:"Nike Shoes", price:2500, img:"https://via.placeholder.com/150"},
+  {name:"Adidas Shoes", price:3000, img:"https://via.placeholder.com/150"},
+  {name:"Puma Shoes", price:2800, img:"https://via.placeholder.com/150"}
+];
 
-<script src="script.js"></script>
+function showProducts(){
+  let container = document.getElementById("products");
+  container.innerHTML = "";
+
+  products.forEach(p=>{
+    container.innerHTML += `
+      <div class="product">
+        <img src="${p.img}">
+        <h3>${p.name}</h3>
+        <p>Rs ${p.price}</p>
+        <a href="https://wa.me/923244504436?text=I want to buy ${p.name}">
+          Order on WhatsApp
+        </a>
+      </div>
+    `;
+  });
+}
+
+showProducts();
+</script>
+
 </body>
 </html>
